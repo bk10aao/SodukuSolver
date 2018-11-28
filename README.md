@@ -1,1 +1,1 @@
-# Default project steructure for IntelliJ
+# Default project structure for IntelliJ

@@ -1,37 +1,43 @@
 public class SudokuSolver {
 
     private static final int GRID_SIZE = 9;
+    static int[][] gridData =   { {0, 0, 0, 0, 2, 8, 0, 7, 0},
+            {0, 0, 0, 3, 0, 0, 0, 0, 8},
+            {0, 0, 8, 0, 0, 1, 0, 0, 4},
+            {0, 4, 0, 0, 0, 0, 7, 0, 6},
+            {0, 8, 0, 7, 5, 6, 0, 4, 0},
+            {5, 0, 7, 0, 0, 0, 0, 1, 0},
+            {9, 0, 0, 8, 0, 0, 6, 0, 0},
+            {8, 0, 0, 0, 0, 9, 0, 0, 0},
+            {0, 2, 0, 5, 4, 0, 0, 0, 0} };
+    private static int[][] grid;
 
+    public SudokuSolver(int[][] grid) {
+        this.grid = grid;
+    }
     public static void main(String[] args) {
-
-        int[][] board = { {7, 0, 2, 0, 5, 0, 6, 0, 0},
-                          {0, 0, 0, 0, 0, 3, 0, 0, 0},
-                          {1, 0, 0, 0, 0, 9, 5, 0, 0},
-                          {8, 0, 0, 0, 0, 0, 0, 9, 0},
-                          {0, 4, 3, 0, 0, 0, 7, 5, 0},
-                          {0, 9, 0, 0, 0, 0, 0, 0, 8},
-                          {0, 0, 9, 7, 0, 0, 0, 0, 5},
-                          {0, 0, 0, 2, 0, 0, 0, 0, 0},
-                          {0, 0, 7, 0, 4, 0, 2, 0, 3} };
-        printBoard(board);
-        if(solveBoard(board))
+        SudokuSolver sudokuSolver = new SudokuSolver(gridData);
+        System.out.println(printBoard(grid));
+        if(sudokuSolver.solveBoard(grid))
             System.out.println("\nSolved Successfully\n");
         else
-            System.out.println("\nUnsolvable board\n");
-        printBoard(board);
+            System.out.println("\nUnsolvable grid\n");
+        System.out.println(printBoard(grid));
     }
 
-    public static void printBoard(int[][] board) {
+    public static String printBoard(int[][] board) {
+        StringBuilder s = new StringBuilder();
         for(int row = 0; row < GRID_SIZE; row++) {
             if(row % 3 == 0 && row != 0)
-                System.out.println("---+---+---");
+                s.append("--- + --- +---\n");
             for(int column = 0; column < GRID_SIZE; column++) {
                 if(column % 3 == 0 && column != 0)
-                    System.out.print("|");
-                System.out.print(board[row][column]);
+                    s.append(" | ");
+                s.append(board[row][column]);
             }
-            System.out.println();
+            s.append("\n");
         }
+        return s.toString();
     }
 
     private static boolean isNumberInRow(int[][] board, int number, int row) {
@@ -65,7 +71,7 @@ public class SudokuSolver {
                !isNumberInBox(board, number, row, column);
     }
 
-    public static boolean solveBoard(int[][] board) {
+    public boolean solveBoard(int[][] board) {
         for(int row = 0; row < GRID_SIZE; row++)
             for(int column = 0; column < GRID_SIZE; column++)
                 if(board[row][column] == 0)
@@ -73,7 +79,7 @@ public class SudokuSolver {
         return true;
     }
 
-    private static boolean solveSquare(int[][] board, int row, int column) {
+    private boolean solveSquare(int[][] board, int row, int column) {
         for(int numberToTry = 1; numberToTry <= GRID_SIZE; numberToTry++)
             if(isValidPlacement(board, numberToTry, row, column)) {
                 board[row][column] = numberToTry;

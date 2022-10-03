@@ -22,7 +22,7 @@ public class SodukuSolverTest {
     }
 
     @Test
-    public void givenUnsSolvableInput_returns_false() {
+    public void givenUnsolvableInput_returns_false() {
         SudokuSolver sudokuSolver = new SudokuSolver(unsolvableBoard);
         assertFalse(sudokuSolver.solveBoard(unsolvableBoard));
     }
